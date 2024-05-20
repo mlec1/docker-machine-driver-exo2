@@ -1,0 +1,11 @@
+*.log
+*.iml
+.idea/
+/bin
+cover
+/.dapper
+/dist
+*.swp
+rancher-machine
+.DS_STORE
+test-data*
