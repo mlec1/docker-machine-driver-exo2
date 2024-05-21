@@ -152,6 +152,14 @@ func (d *Driver) GetSSHHostname() (string, error) {
 	return d.GetIP()
 }
 
+// GetIP returns the ip
+func (d *Driver) GetIP() (string, error) {
+	if d.IPAddress == "" {
+		return "", errors.New("IP address is not set")
+	}
+	return d.IPAddress, nil
+}
+
 // GetSSHUsername returns the username to use with SSH
 func (d *Driver) GetSSHUsername() string {
 	if d.SSHUser == "" {
