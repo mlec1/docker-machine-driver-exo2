@@ -4,6 +4,8 @@ NAME:=exo2
 BINARY_NAME ?= ${NAME}
 VERSION:=$(shell  date +%Y%m%d%H%M%S)
 
+LDFLAGS=-ldflags "-w -s"
+
 DIST_DIR:=dist
 GO ?= go
 
@@ -15,5 +17,5 @@ all: build
 #
 build:
 	mkdir -p ${DIST_DIR}
-	GO111MODULE=on GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ${DIST_DIR}/docker-machine-driver-${BINARY_NAME} .
+	CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ${DIST_DIR}/docker-machine-driver-${BINARY_NAME} .
 	shasum -a 256 ${DIST_DIR}/*
