@@ -15,7 +15,5 @@ all: build
 #
 build:
 	mkdir -p ${DIST_DIR}
-	GO111MODULE=on GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ${DIST_DIR}/docker-machine-driver-${BINARY_NAME}-linux .
-	GO111MODULE=on GOOS=linux GOARCH=arm64 go build -buildvcs=false -o ${DIST_DIR}/docker-machine-driver-${BINARY_NAME}-linux-arm64 .
-	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -buildvcs=false -o ${DIST_DIR}/docker-machine-driver-${BINARY_NAME}-darwin .
+	GO111MODULE=on GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ${DIST_DIR}/docker-machine-driver-${BINARY_NAME} .
 	shasum -a 256 ${DIST_DIR}/*
