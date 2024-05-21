@@ -62,71 +62,71 @@ manage_etc_hosts: localhost
 func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 	return []mcnflag.Flag{
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_ENDPOINT",
-			Name:   "exoscale-url",
+			EnvVar: "EXO2_ENDPOINT",
+			Name:   "exo2-url",
 			Value:  defaultAPIEndpoint,
 			Usage:  "exoscale API endpoint",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_API_KEY",
-			Name:   "exoscale-api-key",
+			EnvVar: "EXO2_API_KEY",
+			Name:   "exo2-api-key",
 			Usage:  "exoscale API key",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_API_SECRET",
-			Name:   "exoscale-api-secret-key",
+			EnvVar: "EXO2_API_SECRET",
+			Name:   "exo2-api-secret-key",
 			Usage:  "exoscale API secret key",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_INSTANCE_TYPE",
-			Name:   "exoscale-instance-type",
+			EnvVar: "EXO2_INSTANCE_TYPE",
+			Name:   "exo2-instance-type",
 			Value:  defaultInstanceType,
 			Usage:  "exoscale instance type (Small, Medium, Large, ...)",
 		},
 		mcnflag.IntFlag{
-			EnvVar: "EXOSCALE_DISK_SIZE",
-			Name:   "exoscale-disk-size",
+			EnvVar: "EXO2_DISK_SIZE",
+			Name:   "exo2-disk-size",
 			Value:  defaultDiskSize,
 			Usage:  "exoscale disk size (10, 50, 100, 200, 400)",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_IMAGE",
-			Name:   "exoscale-image",
+			EnvVar: "EXO2_IMAGE",
+			Name:   "exo2-image",
 			Value:  defaultImage,
 			Usage:  "exoscale image template",
 		},
 		mcnflag.StringSliceFlag{
-			EnvVar: "EXOSCALE_SECURITY_GROUP",
-			Name:   "exoscale-security-group",
+			EnvVar: "EXO2_SECURITY_GROUP",
+			Name:   "exo2-security-group",
 			Value:  []string{defaultSecurityGroup},
 			Usage:  "exoscale security group",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_AVAILABILITY_ZONE",
-			Name:   "exoscale-availability-zone",
+			EnvVar: "EXO2_AVAILABILITY_ZONE",
+			Name:   "exo2-availability-zone",
 			Value:  defaultAvailabilityZone,
 			Usage:  "exoscale availability zone",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_SSH_USER",
-			Name:   "exoscale-ssh-user",
+			EnvVar: "EXO2_SSH_USER",
+			Name:   "exo2-ssh-user",
 			Value:  "",
 			Usage:  "name of the ssh user",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_SSH_KEY",
-			Name:   "exoscale-ssh-key",
+			EnvVar: "EXO2_SSH_KEY",
+			Name:   "exo2-ssh-key",
 			Value:  "",
 			Usage:  "path to the SSH user private key",
 		},
 		mcnflag.StringFlag{
-			EnvVar: "EXOSCALE_USERDATA",
-			Name:   "exoscale-userdata",
+			EnvVar: "EXO2_USERDATA",
+			Name:   "exo2-userdata",
 			Usage:  "path to file with cloud-init user-data",
 		},
 		mcnflag.StringSliceFlag{
-			EnvVar: "EXOSCALE_ANTI_AFFINITY_GROUP",
-			Name:   "exoscale-anti-affinity-group",
+			EnvVar: "EXO2_ANTI_AFFINITY_GROUP",
+			Name:   "exo2-anti-affinity-group",
 			Value:  []string{},
 			Usage:  "exoscale anti affinity group",
 		},
@@ -217,12 +217,12 @@ func (d *Driver) UnmarshalJSON(data []byte) error {
 
 	// Make sure to reload values that are subject to change from envvars and os.Args.
 	driverOpts := rpcdriver.GetDriverOpts(d.GetCreateFlags(), os.Args)
-	if _, ok := driverOpts.Values["exoscale-api-key"]; ok {
-		d.APIKey = driverOpts.String("exoscale-api-key")
+	if _, ok := driverOpts.Values["exo2-api-key"]; ok {
+		d.APIKey = driverOpts.String("exo2-api-key")
 	}
 
-	if _, ok := driverOpts.Values["exoscale-api-secret-key"]; ok {
-		d.APISecretKey = driverOpts.String("exoscale-api-secret-key")
+	if _, ok := driverOpts.Values["exo2-api-secret-key"]; ok {
+		d.APISecretKey = driverOpts.String("exo2-api-secret-key")
 	}
 
 	return nil
@@ -232,33 +232,33 @@ func (d *Driver) UnmarshalJSON(data []byte) error {
 // SetConfigFromFlags configures the driver with the object that was returned
 // by RegisterCreateFlags
 func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
-	d.URL = flags.String("exoscale-url")
-	d.APIKey = flags.String("exoscale-api-key")
-	d.APISecretKey = flags.String("exoscale-api-secret-key")
-	d.InstanceType = flags.String("exoscale-instance-type")
-	d.DiskSize = int64(flags.Int("exoscale-disk-size"))
-	d.Image = flags.String("exoscale-image")
-	d.SecurityGroups = flags.StringSlice("exoscale-security-group")
-	d.AntiAffinityGroups = flags.StringSlice("exoscale-anti-affinity-group")
-	d.AvailabilityZone = strings.ToLower(flags.String("exoscale-availability-zone"))
-	d.SSHUser = flags.String("exoscale-ssh-user")
-	d.SSHKey = flags.String("exoscale-ssh-key")
-	d.UserDataFile = flags.String("exoscale-userdata")
+	d.URL = flags.String("exo2-url")
+	d.APIKey = flags.String("exo2-api-key")
+	d.APISecretKey = flags.String("exo2-api-secret-key")
+	d.InstanceType = flags.String("exo2-instance-type")
+	d.DiskSize = int64(flags.Int("exo2-disk-size"))
+	d.Image = flags.String("exo2-image")
+	d.SecurityGroups = flags.StringSlice("exo2-security-group")
+	d.AntiAffinityGroups = flags.StringSlice("exo2-anti-affinity-group")
+	d.AvailabilityZone = strings.ToLower(flags.String("exo2-availability-zone"))
+	d.SSHUser = flags.String("exo2-ssh-user")
+	d.SSHKey = flags.String("exo2-ssh-key")
+	d.UserDataFile = flags.String("exo2-userdata")
 	d.UserData = []byte(defaultCloudInit)
 	d.SetSwarmConfigFromFlags(flags)
 
 	if d.APIKey == "" || d.APISecretKey == "" {
-		return errors.New("missing an API key (--exoscale-api-key) or API secret key (--exoscale-api-secret-key)")
+		return errors.New("missing an API key (--exo2-api-key) or API secret key (--exo2-api-secret-key)")
 	}
 
     // Mandatory AvailabilityZone
     if d.AvailabilityZone == "" {
-        return errors.New("missing AvailabilityZone (--exoscale-availability-zone)")
+        return errors.New("missing AvailabilityZone (--exo2-availability-zone)")
     }
 
     // Mandatory Endpoint URl
     if d.URL == "" {
-        return errors.New("missing URL (--exoscale-URL)")
+        return errors.New("missing URL (--exo2-URL)")
     }
 
     // The zone must be in the endpoint url as the url have the following format
